@@ -1,0 +1,10 @@
+line  glomeruli_concat
+# VA7I likely to include, but was marked with a ? in Hong lab spreadsheet. see Wong et al. 2002.
+# DC4,"arm",DC3,VM6,VC3,DL2,VC5,"column",VM5d,DL3,VM5v,DP1l,VA7l,DC2 marked as either ?/+?/-?
+GH146  5,DL1,VA7m,DM4,VA1v,VA3,VC1,DA3,DA2,DP1m,D,VA4,DA1,VA6,DM6,DA4l,VM4,DL4,DM7,VM1,VL2p,DM2,DL6,DL5,VA1d,VA2,VL1,VA7l,DM3,VC2,VM3,DA4m,VM7,DM1,VL2a,DC1,1
+# these are at least the glomeruli recorded from in figure 2c of Badel et al. 2016
+NP225  DM6,DM5,DM2,DM1,DM4,VM2,VM7d,VM7v,DA4L,DA2,DL1,DL5,D,DM3,DC2,VA6,DC3,DL4,DA3,DL3,DA1,VA1d,VA1v,VL2a,VL2p,VA5,VM4,VA7L,VA3,VA4,VA7m,VC2,VC1,VM3,VA2,VM1,Dp1m
+NP3481  DM6,DL5,VM2,VM7
+# subset of NP225 Zhannetta's project focuses on
+zg_rearing  DM6,DL5,VM7
+

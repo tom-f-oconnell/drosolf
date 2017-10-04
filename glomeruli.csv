@@ -1,0 +1,55 @@
+glomerulus,OR,OR chromosome,ORN type,PN soma location,PN Gal4 line(s),Or mutant,"ORN spontaneous  rate (ORN/""empty neuron"")",ORNs per glomerulus,Gal4+ in GH146?,notes
+DC4,IR64a,3,sacculus,?,,,,,(-?),ORNs in sacculus. RW: my GH146 stains look like maybe this glomerulus is GFP -
+DL2,IR75a/IR75b/IR75c,3,ac3A,?,,,,,(-?),RW: my GH146 stains look like maybe this glomerulus is GFP -
+DP1l,IR75a,3,ac2X,?,,,,,?,
+DP1m,IR64a,3,sacculus,anterodorsal,,,,,+,ORNs in sacculus. Innervated by a bi-glomerular PN also innervating DM4 (Marin et al 2005).
+VA7m,?,?,?,lateral,,,,,+,"Unknown ORN type, but not coeloconic. Wong et al 2002 describes GH146+ lateral PNs innervating VA7lm?"
+VL1,IR75d,3,"ac1X, ac2X, ac4X",ventral,,,,,+,
+VL2a,IR84a,3,ac4X,anterodorsal,,,,,+,"innervated by a bi-glomerular PN also innervating DC1, & also by a uniglomerular PN (Marin et al 2005)"
+VL2p,IR31a,2,ac1X,anterodorsal,,,,,+,innervated by 1 or more multiglomerular PNs (Marin et al 2005)
+VM1,IR92a/IR76b,3,ac1X,lateral,,,,,+,
+VM4,IR76a/IR76b,3,ac4X,anterodorsal,,,,,+,
+VM5d,?,?,?,anterodorsal?,,,,,?,"Unknown ORN type, but not coeloconic."
+VM6,?,?,?,?,,,,,?,Unknown coeloconic ORN type.
+V,Gr21a/Gr63a,2,ab1C,?,NP7273,Gr63a[1],15/na,90,-,
+DL1,Or10a,X,ab1D,anterodorsal,NP3529,Or10a[f03694],6/14,90,+,
+DC2,Or13a,X,"? (""ai1""?)",?,,,,,(-?),RW: my GH146 stains look like maybe this glomerulus is GFP -
+DC1,Or19a/b,X,at3,anterodorsal,c315a,-,na/29 (19a),,+,"innervated by a bi-glomerular PN also innervating VL2a, & also by a uniglomerular PN (Marin et al 2005)"
+DM2,Or22a/b,2,ab3A,lateral,c315a,Or22a/b[delta-halo],4/4 (Or22a),36,+,
+DA3,Or23a,2,at2,anterodorsal,,,,,+,
+DA4m,Or2a,X,at3,anterodorsal?,,,,,+,
+VC1,"Or33c, Or85e",3,pb2A,lateral,NP5221,Or85e[delta-85],7/na,37,+,
+VC3,Or35a/IR76b,2,ac3B,?,T2 (possibly inconsistent),"Or35[af02057], Ir67bMB10077",26/17(Or35a),,?,
+VM7,Or42a,2,pb1A,anterodorsal,"NP3481, NP7217",Or42[af04305],11/na,43,+,
+DM1,Or42b,2,ab1B,lateral & anterodorsal,NP5221,Or42b[EY14886],3/na,90,+,lateral DM1 PNs are GH146+; RW: I seem to have filled 5 DM1 PNs all seemingly from anterodorsal cluster & possibly these could be GH146-
+DA4l,Or43a,2,at3,anterodorsal?,,,,,+,
+VM2,Or43b,2,ab8A,anterodorsal,"NP5103, NP3481, NP7217, possibly inconsistently in NP3062",Or43b[1],na/2,,+,
+VA7l,Or46a,2,pb2B,?,,,,37,(+?),Wong et al 2002 describes GH146+ lateral PNs innervating VA7lm?
+DM3,Or47a,2,ab5B,anterodorsal,,,,,+,
+VA1v,Or47b,2,at4,anterodorsal & ventral,,,,,+,"complete"" and ""partial""-innervating ventral PNs (Marin et al 2002)"
+DL4,"Or49a, Or85f",2,ab10,anterodorsal,c315a,"Or49a[e02161], Or85f[c04024], Or85f[delta-85]?",na/7 (Or85),,+,
+VA5,Or49b,2,ab6B,lateral,,,,,+,
+DA2,Or56a,2,ab4B,lateral,,,,,+,
+DM4,Or59b,2,ab2A,anterodorsal,NP3062,-,5/2,54,+,"innervated by a bi-glomerular anterodorsal PN also innervating DP1m (Marin et al 2005), and also by other PN(s)"
+1,Or59c,2,pb3A,anterodorsal,,,,40,+,Dickson Or59c-Gal4 driver shows some presumed ectopic expression in VM7
+DL3,Or65a/b/c,3,at4,lateral,,,,,?,
+DM6,Or67a,3,ab10,anterodorsal,"NP3481, NP7217, NP3062",-,na/11,,+,
+VA3,Or67b,3,ab9,anterodorsal,,,,,+,
+VC4,Or67c,3,ab7B,?,,,,,,
+DA1,Or67d,3,at1,lateral & ventral,"Mz19, T2",Or67d[GAL4-1],na/na,,+,"both ""complete"" and ""partial""-innervating lateral PNs (Marin et al 2002); Dickson Or67d-Gal4 driver shows ""ectopic"" expression in VA6"
+D,Or69aA/aB,3,ab9,anterodorsal,,,,,+,
+VC2,Or71a,3,pb1B,lateral (& anterodorsal?),NP5221 (inconsistent),Or71a[c06754],6/na,43,+,RW: I've recorded 2 PNs with diffuse-looking innervation around VC2; both were anterodorsal
+DL5,Or7a,X,ab4A,anterodorsal,"NP3481, NP7217, NP3062",-,14/17,,+,
+VA6,Or82a,3,ab5A,anterodorsal,Mz612,Or82a[EY20192],9/16,,+,
+DC3,Or83c,3,at2,anterodorsal,Mz19,Or83c[MB11142],na/na,,?,
+DM5,Or85a,3,ab2B,lateral,T2,Or85a[delta-85]?,1/14,54,+,
+VA4,Or85d,3,pb3B,lateral,NP5221 (inconsistent),Or85d[delta-85],9/na,40,+,
+VA1d,Or88a,3,at4,anterodorsal,Mz19,-,na/26,,+,
+VA2,Or92a,3,ab1A,anterodorsal,,,9/na,90,+,"also a ""VA2p"" glomerulus innervated by lateral PNs? (Wong et al 2002)"
+VM5v,Or98a,3,ab7A,?,,,,,(-?),RW: my GH146 stains look like maybe this glomerulus is GFP -
+VM3,Or9a,X,ab8B,anterodorsal,,,,,+,
+DL6?,?,?,?,anterodorsal,,,,,+,"This glomerulus was named based on Nc82 staining in Marin et al., 2005, but was not described by Laissue et al., 1999 or by Couto et al., 2005. It is described as a small, densely innervated glomerulus located just anterior to DL1. "
+DM7?,?,?,?,anterodorsal,,,,,+,"This glomerulus was named based on Nc82 staining in Marin et al., 2005, but was not described by Laissue et al., 1999 or by Couto et al., 2005."
+VC5?,IR41a/IR76b,3,sacculus,?,,,,,?,"ORNs in sacculus. This glomerulus was not described by Laissue et al., 1999 or by Couto et al., 2005, and seems to first appear in Endo et al., 2007."
+"""column""",IR40a,2,sacculus,?,,,,,?,"ORNs in sacculus. This ""glomerulus"" was first described in Silbering et al."
+"""arm""",IR40a,2,sacculus,?,,,,,?,"ORNs in sacculus. This ""glomerulus"" was first described in Silbering et al."
