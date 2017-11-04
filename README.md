@@ -7,6 +7,13 @@ git clone git://github.com/tom-f-oconnell/drosolf.git
 pip install -e drosolf/
 ```
 
+If you need elevated permissions to install (if the `pip install` line fails with 
+some sort of permissions error), you can try:
+
+```
+sudo -H pip install -e drosolf/
+```
+
 ### Examples
 
 To get Hallem and Carlson ORN responses, with the baseline added back in.
