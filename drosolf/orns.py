@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import pandas as pd
 import numpy as np
 import os
@@ -15,10 +16,9 @@ def orns(verbose=False):
     abs_hc = hc + hc.loc['spontaneous firing rate']
 
     if verbose:
-        print '{} entries negative after adding spontaneous firing rate.'.format(
-            np.sum(np.sum(abs_hc.as_matrix() < 0)))
+        print('{} entries negative after adding spontaneous firing rate.'.format(
+            np.sum(np.sum(abs_hc.as_matrix() < 0))))
 
     abs_hc[abs_hc < 0] = 0
-
     return abs_hc
 
