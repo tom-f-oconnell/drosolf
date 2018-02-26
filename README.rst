@@ -1,3 +1,7 @@
+
+.. image:: https://travis-ci.org/tom-f-oconnell/drosolf.svg?branch=master
+    :target: https://travis-ci.org/tom-f-oconnell/drosolf
+
 Installation
 ~~~~~~~~~~~~
 
