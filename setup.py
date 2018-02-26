@@ -6,7 +6,7 @@ setup(
     version='0.1.2',
     packages=['drosolf'],
     scripts=[],
-    #setup_requires=['pytest-runner'],
+    setup_requires=['pytest-runner'],
     install_requires=['numpy', 'pandas'],
     tests_require=['pytest'],
     include_package_data=True,

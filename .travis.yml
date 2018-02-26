@@ -12,4 +12,4 @@ install:
   - pip install -r test_requirements.txt
 # TODO is just listing multiple python versions above sufficent to get this to
 # run with all of them?
-scripts: pytest
+script: pytest
