@@ -2,9 +2,10 @@
 
 # based on Olsen and Wilson 2010
 
-# TODO best syntax for packaging?
+# TODO best syntax for packaging? i kind of thought "import orns" was supposed
+# to work?
 #from . import orns
-import orns
+from drosolf import orns
 import numpy as np
 
 # TODO check eq in Parnas against original Olsen & Wilson
