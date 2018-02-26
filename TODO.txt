@@ -1,0 +1,2 @@
+-what is setup_requires / tests_require (+ stuff in setup.cfg) for if
+ "python setup.py test" can not automatically install pytest?

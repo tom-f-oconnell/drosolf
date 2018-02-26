@@ -1,0 +1,15 @@
+language: python
+python:
+  - "2.6"
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "pypy2.7"
+  - "pypy3.5"
+install:
+  - pip install .
+  - pip install -r test_requirements.txt
+# TODO is just listing multiple python versions above sufficent to get this to
+# run with all of them?
+scripts: pytest
