@@ -1,2 +1,30 @@
 -what is setup_requires / tests_require (+ stuff in setup.cfg) for if
  "python setup.py test" can not automatically install pytest?
+
+-reproduce at least fig 5-6 in Olsen & Wilson (to the extent that I can w/
+ available data, lack of seeds, etc), as one step to check PN transformation
+
+-provide collection of plotting functions to reproduce style (for comparison
+ + verification) of some keys plots in key papers
+    -e.g. 5-6 from Olsen & Wilson, etc
+    -how to make maximally re-usable
+
+-provide collection of metrics that have been calculated in a lot of these
+ papers
+    -e.g. lifetime sparseness, etc
+
+-how best to offer alternative models for calculations of a certain cell type?
+
+-offer an interface to metadata about these cell types via other sources?
+    -virtual fly brain? others?
+
+-estimate (?) information lost at each layer
+    -(of course, the reformatting does have advantages)
+
+-what kind of ability do we have to predict ORN responses to new odors?
+    - train classifier on Hallem / DoOR and check performance on held out
+      examples within the datasets?
+
+-better PN model? something accounting for the dynamics / differential
+ sensitivity to inhibition? (particularly if using dynamic models downstream)
+

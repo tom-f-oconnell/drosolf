@@ -11,14 +11,19 @@ import numpy as np
 
 from drosolf import orns
 
+
 # TODO check eq in Parnas against original Olsen & Wilson
 
-def pns(model='input gain control'):
+def pns(orn=None, model='input gain control'):
     """
     Generates projection neuron responses by applying some model to measured
     olfactory receptor neuron responses.
 
     Args:
+        orn (array-like): (optional) If passed, this array is treated as ORN
+        input, instead of the Hallem data returned by drosolf.orns.orns()
+        TODO specify the expected dimensions / labels
+
         model (str, optional): name of the model you would like to use
             options are:
             -'input gain control'
@@ -33,7 +38,9 @@ def pns(model='input gain control'):
     """
     # TODO convert values that should be convertable in orns.py, and raise error
     # there?
-    orn = orns.orns()
+    if orn is None:
+        orn = orns.orns()
+
     # TODO so this isn't set separately for each channel?
     #Rmax = np.amax(orns, axis=1)
 
