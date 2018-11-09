@@ -35,16 +35,31 @@ def orns(add_spontaneous=True, return_spontaneous=False, verbose=False):
     # __file__ always work? caller?
     path = os.path.abspath(os.path.dirname(__file__))
     raw_hc = pd.read_csv(os.path.join(path, 'Hallem_Carlson_2006.csv'))
-    odor_indexed_hc = raw_hc.set_index('odor')[1:].astype(float)
+
+    odor_indexed_hc = raw_hc.set_index('odor')[1:]
+
+    # Just to set all values besides cas_numbers to float in one go.
+    cas_col = odor_indexed_hc['cas_number']
+    odor_indexed_hc = odor_indexed_hc.drop(columns=['cas_number']).astype(float)
+    #odor_indexed_hc['cas_number'] = cas_col
+
+    # TODO TODO i think i do want to keep the entries of all columns as floats,
+    # so think about whether / where / how I want to provide name translation
+    # (or just fn to get float part?)
+
+    def real_valued_part(df):
+        return df[df.columns[df.dtypes == 'float64']]
 
     if add_spontaneous:
-        abs_hc = (odor_indexed_hc + 
+        abs_hc = (real_valued_part(odor_indexed_hc) + 
                   odor_indexed_hc.loc['spontaneous firing rate'])
 
         if verbose:
             print('{} entries negative after adding spontaneous firing ' + \
-                'rate.'.format(np.sum(np.sum(abs_hc.as_matrix() < 0))))
+                'rate.'.format(np.sum(np.sum(real_valued_part(abs_hc
+                ).as_matrix() < 0))))
 
+        # TODO TODO float part here too...
         abs_hc[abs_hc < 0] = 0
         return abs_hc
 
@@ -70,6 +85,7 @@ def nonpheromone_orns(**kwargs):
     to something indicating connection to that paper.
     """
     # TODO 
+    raise NotImplementedError
     
     return orn_responses
 

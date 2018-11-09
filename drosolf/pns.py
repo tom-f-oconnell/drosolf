@@ -7,6 +7,8 @@ orns), to generate simulated projection neuron responses.
 Based on Olsen and Wilson 2010.
 """
 
+from __future__ import division
+
 import numpy as np
 
 from drosolf import orns
