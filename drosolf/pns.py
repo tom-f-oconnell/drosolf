@@ -16,6 +16,12 @@ from drosolf import orns
 
 # TODO check eq in Parnas against original Olsen & Wilson
 
+# TODO default to returning version with noise added?
+# maybe separate function called mean_pns?
+# should probably rename to pns.responses or something...
+# and at that point, maybe make a class for a cell population and start
+# providing a more consistent interface to these things?
+
 def pns(orn=None, model='input gain control'):
     """
     Generates projection neuron responses by applying some model to measured
@@ -80,3 +86,14 @@ def pns(orn=None, model='input gain control'):
         raise ValueError()
 
     return R_pn
+
+
+# will this name be an issue once ultrastructural data becomes available?
+# what would be most useful for simulations then?
+def per_glomerulus():
+    """
+    
+    """
+
+
+# TODO also functions to subdivide by cholinergic / not?
