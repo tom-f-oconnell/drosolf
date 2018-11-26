@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 """
 For loading Hallem & Carlson olfactory receptor neuron responses, in a

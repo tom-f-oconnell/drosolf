@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 """
 Applies transformation to measured olfactory receptor neuron responses (from
@@ -22,7 +21,7 @@ from drosolf import orns
 # and at that point, maybe make a class for a cell population and start
 # providing a more consistent interface to these things?
 
-def pns(orn=None, model='input gain control'):
+def pns(orn=None, model='input gain control', add_noise=False):
     """
     Generates projection neuron responses by applying some model to measured
     olfactory receptor neuron responses.
@@ -85,6 +84,19 @@ def pns(orn=None, model='input gain control'):
     else:
         raise ValueError()
 
+    # TODO may want to leave to another fn? or only take a # trials?
+    # s.t. noise can be included efficiently in many trial case
+    if add_noise:
+        # Parameters used in Luo 2010, for their (simple) model of Kenyon cell
+        # responses.
+        # TODO need to check there isn't a better estimate of PN noise
+        # properties
+        alpha_noise_hz = 0.025
+        sigma_noise_hz = 10
+
+        R_pn = R_pn + (sigma_noise_hz * np.tanh(alpha_noise_hz * R_pn) * 
+            np.random.normal(loc=0.0, scale=1.0, size=R_pn.shape))
+
     return R_pn
 
 
@@ -92,8 +104,7 @@ def pns(orn=None, model='input gain control'):
 # what would be most useful for simulations then?
 def per_glomerulus():
     """
-    
     """
-
+    raise NotImplementedError
 
 # TODO also functions to subdivide by cholinergic / not?
