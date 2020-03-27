@@ -51,7 +51,7 @@ def orns(add_spontaneous=True, drop_sfr=True, verbose=False):
 
     # TODO TODO i think i do want to keep the entries of all columns as floats,
     # so think about whether / where / how I want to provide name translation
-    # (or just fn to get float part?)
+    # (or just fn to get float part?) (?)
     def real_valued_part(df):
         return df[df.columns[df.dtypes == 'float64']]
 
@@ -66,12 +66,19 @@ def orns(add_spontaneous=True, drop_sfr=True, verbose=False):
                 'rate.').format(np.sum(np.sum(real_valued_part(abs_hc
                 ).as_matrix() < 0))))
 
-        # TODO TODO float part here too...
+        # TODO TODO float part here too... (?)
         abs_hc[abs_hc < 0] = 0
         ret = abs_hc
 
     if drop_sfr:
         ret.drop('spontaneous firing rate', inplace=True)
+
+    # TODO maybe factor chem id conversion natural_odors wraps arong this fn
+    # (which uses chemutils) into here, calling if chemutils is found?
+    # TODO plus the hallem grouping into chemical classes that
+    # natural_odors/odors.py adds
+
+    ret.columns.name = 'receptor'
 
     return ret
 
