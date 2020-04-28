@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='drosolf',
-    version='0.1.2',
+    version='0.1.3',
     packages=['drosolf'],
     scripts=[],
     setup_requires=['pytest-runner'],

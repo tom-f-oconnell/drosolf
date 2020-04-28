@@ -28,3 +28,7 @@
 -better PN model? something accounting for the dynamics / differential
  sensitivity to inhibition? (particularly if using dynamic models downstream)
 
+- delete the unused Hallem data file, after checking they are consistent and 
+  making sure the version i keep has all the data i want (including Hallem's
+  chemical class labels, for instance)
+

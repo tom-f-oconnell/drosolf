@@ -12,36 +12,42 @@ import numpy as np
 import pandas as pd
 
 
-path = os.path.abspath(os.path.dirname(__file__))
+_path = os.path.abspath(os.path.dirname(__file__))
 # TODO get missing glomeruli (that currently parse to "Unnamed X") to
 # parses to NaN? (would then have to change handling that expected "unnamed")
-raw_hc = pd.read_csv(os.path.join(path, 'Hallem_Carlson_2006.csv'))
+raw_hc = pd.read_csv(os.path.join(_path, 'Hallem_Carlson_2006.csv'))
+
+_SPONTANEOUS_FIRING_RATE_COLUMN = 'spontaneous firing rate'
 
 # TODO compare to data loaded from the text file from Anne's code
 # + where is 176 from in olsen?
-def orns(add_spontaneous=True, drop_sfr=True, verbose=False):
+# (i now know that one row from Anne's version of the data should be wrong. one
+# of those acids...)
+def orns(add_sfr=True, drop_sfr=True, verbose=False):
     """
     Args:
-        add_spontaneous (bool): (optional, default=True) whether spontaneous
-            firing rate should be added to each measured change, to recover true
-            firing rates.
-        drop_sfr (bool): (optional, default=True)
-        verbose (bool) (optional, default=False): prints extra debugging
-            information if true
+        add_sfr (bool): (optional, default=True) Whether spontaneous firing rate
+            should be added to each measured change, to recover absolute
+            odor-evoked firing rates.
+
+        drop_sfr (bool): (optional, default=True) If False, the spontaneous
+            firing rates will be returned alongside the odor data.
+
+        verbose (bool) (optional, default=False): Prints extra debugging
+            information if True.
 
     Returns:
         pandas.DataFrame with odors as one column, and olfactory receptors as
         remaining columns. The entries are firing rates above or below baseline,
         with the exception of the "spontaneous firing rate" row, which can be
         added to the rows with odors to recover the absolute firing rate.
-
-        If add_spontaneous is return
     """
     global raw_hc
 
     # TODO better way to set column index?
     raw_hc.columns = raw_hc.iloc[0].fillna('cas_number')
 
+    # TODO what was the 1: intended to exclude?
     odor_indexed_hc = raw_hc.set_index('odor')[1:]
 
     # Just to set all values besides cas_numbers to float in one go.
@@ -57,21 +63,23 @@ def orns(add_spontaneous=True, drop_sfr=True, verbose=False):
 
     ret = odor_indexed_hc
 
-    if add_spontaneous:
+    if add_sfr:
         abs_hc = (real_valued_part(odor_indexed_hc) + 
-                  odor_indexed_hc.loc['spontaneous firing rate'])
+            odor_indexed_hc.loc[_SPONTANEOUS_FIRING_RATE_COLUMN]
+        )
 
         if verbose:
             print(('{} entries negative after adding spontaneous firing ' +
-                'rate.').format(np.sum(np.sum(real_valued_part(abs_hc
-                ).as_matrix() < 0))))
+                'rate.').format(
+                np.sum(np.sum(real_valued_part(abs_hc).as_matrix() < 0))
+            ))
 
         # TODO TODO float part here too... (?)
         abs_hc[abs_hc < 0] = 0
         ret = abs_hc
 
     if drop_sfr:
-        ret.drop('spontaneous firing rate', inplace=True)
+        ret.drop(_SPONTANEOUS_FIRING_RATE_COLUMN, inplace=True)
 
     # TODO maybe factor chem id conversion natural_odors wraps arong this fn
     # (which uses chemutils) into here, calling if chemutils is found?
@@ -83,9 +91,9 @@ def orns(add_spontaneous=True, drop_sfr=True, verbose=False):
     return ret
 
 
-
-# helper functions with more verbose names wrapping various combinations of
+# TODO helper functions with more verbose names wrapping various combinations of
 # flags to function above?
+
 
 def nonpheromone_orns(**kwargs):
     """Wraps orns(), with same kwargs, removing the data from the putatitive
@@ -106,7 +114,8 @@ def nonpheromone_orns(**kwargs):
 
     pheromone_receptors = {'33b', '47b', '65a', '88a'}
     r_orns.drop(r_orns.columns[r_orns.columns.isin(pheromone_receptors)],
-        axis=1, inplace=True)
+        axis=1, inplace=True
+    )
 
     # TODO maybe assert only decreasing column dimension by size of set
     
@@ -165,3 +174,4 @@ def per_glomerulus():
 # where user can specify which index they prefer? could add a flag to each
 # function, but i'd prefer not to. could also just require user to index their
 # own dataframes.
+

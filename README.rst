@@ -37,25 +37,6 @@ control model and the ORN responses.
     from drosolf import pns
     pn_responses = pns.pns()
 
-Get correlation matrices at the ORN and (simulated) PN levels for a list
-of odors, named as the columns of the previous DataFrames.
-
-::
-
-    from drosolf import corrs
-    orn_correlations, pn_correlations = corrs.get_corrs(list_of_odors)
-
-Generate plots of the same ORN and PN correlation matrices (uses
-seaborn).
-
-::
-
-    import matplotlib.pyplot as plt
-    from drosolf import corrs
-
-    corrs.plot_corrs(list_of_odors)
-    plt.show()
-
 Todo
 ~~~~
 
