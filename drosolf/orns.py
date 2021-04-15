@@ -16,10 +16,62 @@ _path = os.path.abspath(os.path.dirname(__file__))
 # TODO get missing glomeruli (that currently parse to "Unnamed X") to
 # parses to NaN? (would then have to change handling that expected "unnamed")
 raw_hc = pd.read_csv(os.path.join(_path, 'Hallem_Carlson_2006.csv'))
+# TODO delete after fixing fns below to not mutate `raw_hc`, or at least not
+# do it in stupid ways
+_orig_raw_hc = raw_hc.copy()
+#
 
 _SPONTANEOUS_FIRING_RATE_COLUMN = 'spontaneous firing rate'
 
-# TODO compare to data loaded from the text file from Anne's code
+# TODO TODO choose glomeruli names considering this + other data (the wilson lab
+# spreadsheet also in data dir)
+
+# h1 = _orig_raw_hc.copy()
+# h2 = pd.read_csv('/home/tom/src/drosolf/data/HC_data_raw.csv')
+# ha = pd.concat([h1.iloc[0, 1:-1].reset_index(), h2.iloc[0, 2:].reset_index()],
+#     axis=1)
+# ha.iloc[:,0] = ha.iloc[:,0].apply(lambda x: x.lower())
+
+# TODO TODO TODO fix this hack. this was generated essentially from h2 above
+# (and also, some of the names are likely going to need correction)
+# the below is length 24, which means keys are unique
+glomerulus2receptor = {
+    'da3': '23a',
+    'da4l': '43a',
+    'da4m': '2a',
+    'dc1': '19a',
+    'dl1': '10a',
+    'dl3': '65a',
+    'dl4': '85f',
+    'dl5': '7a',
+    'dm2': '22a',
+    'dm3': '33b',
+    # TODO i assume we need to correct this? anything else?
+    'dm3.1': '47a',
+    'dm4': '59b',
+    'dm5': '85a',
+    'dm6': '67a',
+    'va1d': '88a',
+    'va1v': '47b',
+    'va5': '49b',
+    'va6': '82a',
+    'vc3': '35a',
+    'vc4': '67c',
+    'vm2': '43b',
+    'vm3': '9a',
+    'vm5d': '85b',
+    'vm5v': '98a'
+}
+glomerulus2receptor = {g.upper(): r for g, r in glomerulus2receptor.items()}
+# between these two, that should imply 1:1
+assert len(glomerulus2receptor) == 24
+assert len(set(glomerulus2receptor.values())) == len(glomerulus2receptor)
+# and if 1:1, we can safely do this (note the order is swapped)
+receptor2glomerulus = {r: g for g, r in glomerulus2receptor.items()}
+assert len(receptor2glomerulus) == len(glomerulus2receptor)
+#
+
+# TODO compare to data loaded from the text file from Ann's code
 # + where is 176 from in olsen?
 # (i now know that one row from Anne's version of the data should be wrong. one
 # of those acids...)
@@ -44,7 +96,22 @@ def orns(add_sfr=True, drop_sfr=True, verbose=False):
     """
     global raw_hc
 
+    # TODO TODO TODO probably do in a non distructive way, so this fn is
+    # guaranteed to work the same way across sequential calls!
+    # honestly, what am i even doing here?
+    # (it appears i'm doing the fillna just to fill the last value, which is
+    # always nan. prob better to just assert that's the only one nan + that
+    # it is the only one w/ 'cas_number' for the column name as opposed to all
+    # the otherws, which are glomerulus names / "Unnamed: 8" / "Unnamed: 21"
+
+    # Comparing ../HC_data_raw.txt with ./Hallem_Carlson_2006.csv, it seems that
+    # whoever made the former thought Or33b ("Unnamed: 8") should be 
+
     # TODO better way to set column index?
+    #import ipdb; ipdb.set_trace()
+    # TODO TODO TODO this is overwriting the glomerulus name row (1st row) with
+    # the row beneath, which is all receptor names. don't lose this data, so we
+    # can optionally return it / use it in other functions!
     raw_hc.columns = raw_hc.iloc[0].fillna('cas_number')
 
     # TODO what was the 1: intended to exclude?
@@ -122,6 +189,8 @@ def nonpheromone_orns(**kwargs):
     return r_orns
 
 
+# TODO TODO TODO is this broken now? it seems to be...
+'''
 def receptors2glomeruli(as_series=False):
     """Returns dict with receptors as keys, and the glomeruli their ORNs project
     to as values. Some receptors will map to None, as they were not listed with
@@ -167,6 +236,7 @@ def per_glomerulus():
     """
     """
     raise NotImplementedError
+'''
     
 
 # TODO include means of translating between receptors and glomerulus
