@@ -36,33 +36,35 @@ _SPONTANEOUS_FIRING_RATE_COLUMN = 'spontaneous firing rate'
 # (and also, some of the names are likely going to need correction)
 # the below is length 24, which means keys are unique
 glomerulus2receptor = {
-    'da3': '23a',
-    'da4l': '43a',
-    'da4m': '2a',
-    'dc1': '19a',
-    'dl1': '10a',
-    'dl3': '65a',
-    'dl4': '85f',
-    'dl5': '7a',
-    'dm2': '22a',
-    'dm3': '33b',
+    'DA3': '23a',
+    'DA4l': '43a',
+    'DA4m': '2a',
+    'DC1': '19a',
+    'DL1': '10a',
+    'DL3': '65a',
+    'DL4': '85f',
+    'DL5': '7a',
+    'DM2': '22a',
+    # NOTE: DoOR says this goes to DM5 and DM3
+    'DM3': '33b',
     # TODO i assume we need to correct this? anything else?
-    'dm3.1': '47a',
-    'dm4': '59b',
-    'dm5': '85a',
-    'dm6': '67a',
-    'va1d': '88a',
-    'va1v': '47b',
-    'va5': '49b',
-    'va6': '82a',
-    'vc3': '35a',
-    'vc4': '67c',
-    'vm2': '43b',
-    'vm3': '9a',
-    'vm5d': '85b',
-    'vm5v': '98a'
+    # DoOR says 47a and 33b both go to DM3
+    'DM3.1': '47a',
+    'DM4': '59b',
+    # NOTE: DoOR says this also gets input from 85a
+    'DM5': '85a',
+    'DM6': '67a',
+    'VA1d': '88a',
+    'VA1v': '47b',
+    'VA5': '49b',
+    'VA6': '82a',
+    'VC3': '35a',
+    'VC4': '67c',
+    'VM2': '43b',
+    'VM3': '9a',
+    'VM5d': '85b',
+    'VM5v': '98a',
 }
-glomerulus2receptor = {g.upper(): r for g, r in glomerulus2receptor.items()}
 # between these two, that should imply 1:1
 assert len(glomerulus2receptor) == 24
 assert len(set(glomerulus2receptor.values())) == len(glomerulus2receptor)
