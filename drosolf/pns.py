@@ -94,8 +94,9 @@ def pns(orn=None, model='input gain control', add_noise=False):
         alpha_noise_hz = 0.025
         sigma_noise_hz = 10
 
-        R_pn = R_pn + (sigma_noise_hz * np.tanh(alpha_noise_hz * R_pn) * 
-            np.random.normal(loc=0.0, scale=1.0, size=R_pn.shape))
+        R_pn = R_pn + (sigma_noise_hz * np.tanh(alpha_noise_hz * R_pn) *
+            np.random.normal(loc=0.0, scale=1.0, size=R_pn.shape)
+        )
 
     return R_pn
 

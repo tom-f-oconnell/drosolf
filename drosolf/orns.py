@@ -12,6 +12,16 @@ import numpy as np
 import pandas as pd
 
 
+
+# NOTE on differences between Hallem_Carlson_2006.csv and hc_data.csv:
+# Hallem_Carlson_2006.csv:
+# - no glomerulus listed for 33b
+#   - hc_data.csv lists DM3, w/ "DM3.1" for 47a. this CSV lists "DM3" for 47a.
+# - no glomerulus listed for 47b
+#   - hc_data.csv lists 'VM5d' for for 85b. both agree on 98a->VM5v
+# - doesn't have the lower concentration / fruit data from the other table
+
+
 _path = os.path.abspath(os.path.dirname(__file__))
 # TODO get missing glomeruli (that currently parse to "Unnamed X") to
 # parses to NaN? (would then have to change handling that expected "unnamed")
@@ -27,10 +37,9 @@ _SPONTANEOUS_FIRING_RATE_COLUMN = 'spontaneous firing rate'
 # spreadsheet also in data dir)
 
 # h1 = _orig_raw_hc.copy()
-# h2 = pd.read_csv('/home/tom/src/drosolf/data/HC_data_raw.csv')
+# h2 = pd.read_csv('/home/tom/src/drosolf/data/hc_data.csv')
 # ha = pd.concat([h1.iloc[0, 1:-1].reset_index(), h2.iloc[0, 2:].reset_index()],
 #     axis=1)
-# ha.iloc[:,0] = ha.iloc[:,0].apply(lambda x: x.lower())
 
 # TODO TODO TODO fix this hack. this was generated essentially from h2 above
 # (and also, some of the names are likely going to need correction)
@@ -49,6 +58,8 @@ glomerulus2receptor = {
     'DM3': '33b',
     # TODO i assume we need to correct this? anything else?
     # DoOR says 47a and 33b both go to DM3
+    # TODO TODO TODO how have matt/i handled this in the modelling? add 47a and 33b
+    # signals?
     'DM3.1': '47a',
     'DM4': '59b',
     # NOTE: DoOR says this also gets input from 85a
@@ -98,7 +109,7 @@ def orns(add_sfr=True, drop_sfr=True, verbose=False):
     """
     global raw_hc
 
-    # TODO TODO TODO probably do in a non distructive way, so this fn is
+    # TODO TODO TODO probably do in a non destructive way, so this fn is
     # guaranteed to work the same way across sequential calls!
     # honestly, what am i even doing here?
     # (it appears i'm doing the fillna just to fill the last value, which is
@@ -106,7 +117,7 @@ def orns(add_sfr=True, drop_sfr=True, verbose=False):
     # it is the only one w/ 'cas_number' for the column name as opposed to all
     # the otherws, which are glomerulus names / "Unnamed: 8" / "Unnamed: 21"
 
-    # Comparing ../HC_data_raw.txt with ./Hallem_Carlson_2006.csv, it seems that
+    # Comparing ../hc_data.csv with ./Hallem_Carlson_2006.csv, it seems that
     # whoever made the former thought Or33b ("Unnamed: 8") should be 
 
     # TODO better way to set column index?
@@ -187,7 +198,7 @@ def nonpheromone_orns(**kwargs):
     )
 
     # TODO maybe assert only decreasing column dimension by size of set
-    
+
     return r_orns
 
 
