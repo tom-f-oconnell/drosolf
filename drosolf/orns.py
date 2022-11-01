@@ -88,26 +88,29 @@ assert len(receptor2glomerulus) == len(glomerulus2receptor)
 # + where is 176 from in olsen?
 # (i now know that one row from Anne's version of the data should be wrong. one
 # of those acids...)
-def orns(add_sfr=True, drop_sfr=True, verbose=False):
+def orns(add_sfr: bool = True, drop_sfr: bool  = True, columns: str = 'receptor',
+    verbose: bool = False) -> pd.DataFrame:
     """
     Args:
-        add_sfr (bool): (optional, default=True) Whether spontaneous firing rate
-            should be added to each measured change, to recover absolute
-            odor-evoked firing rates.
+        add_sfr: whether spontaneous firing rate should be added to each measured
+            change, to recover absolute odor-evoked firing rates.
 
-        drop_sfr (bool): (optional, default=True) If False, the spontaneous
-            firing rates will be returned alongside the odor data.
+        drop_sfr: if False, the spontaneous firing rates will be returned alongside the
+            odor data.
 
-        verbose (bool) (optional, default=False): Prints extra debugging
-            information if True.
+        verbose: prints extra debugging information if True.
 
     Returns:
-        pandas.DataFrame with odors as one column, and olfactory receptors as
+        DataFrame with odors as one column, and olfactory receptors as
         remaining columns. The entries are firing rates above or below baseline,
         with the exception of the "spontaneous firing rate" row, which can be
         added to the rows with odors to recover the absolute firing rate.
     """
     global raw_hc
+
+    valid_columns_vals = ('receptor', 'glomerulus')
+    if columns not in valid_columns_vals:
+        raise ValueError(f'columns argument must be one of {valid_columns_vals}')
 
     # TODO TODO TODO probably do in a non destructive way, so this fn is
     # guaranteed to work the same way across sequential calls!
@@ -144,7 +147,7 @@ def orns(add_sfr=True, drop_sfr=True, verbose=False):
     ret = odor_indexed_hc
 
     if add_sfr:
-        abs_hc = (real_valued_part(odor_indexed_hc) + 
+        abs_hc = (real_valued_part(odor_indexed_hc) +
             odor_indexed_hc.loc[_SPONTANEOUS_FIRING_RATE_COLUMN]
         )
 
@@ -166,7 +169,13 @@ def orns(add_sfr=True, drop_sfr=True, verbose=False):
     # TODO plus the hallem grouping into chemical classes that
     # natural_odors/odors.py adds
 
-    ret.columns.name = 'receptor'
+    if columns == 'receptor':
+        ret.columns.name = 'receptor'
+
+    elif columns == 'glomerulus':
+        ret.columns = ret.columns.map(receptor2glomerulus)
+        ret.columns.name = 'glomerulus'
+        assert not ret.columns.isnull().any()
 
     return ret
 
