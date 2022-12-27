@@ -21,7 +21,7 @@ from drosolf import orns
 # and at that point, maybe make a class for a cell population and start
 # providing a more consistent interface to these things?
 
-def pns(orn=None, model='input gain control', add_noise=False):
+def pns(orn=None, model='input gain control', add_noise=False, **kwargs):
     """
     Generates projection neuron responses by applying some model to measured
     olfactory receptor neuron responses.
@@ -39,6 +39,8 @@ def pns(orn=None, model='input gain control', add_noise=False):
             but so far, only the first is implemented, as that was claimed to be
             the most realistic, in the Olsen paper.
 
+        kwargs: passed thru to drosolf.orns.orns
+
     Returns:
         a pandas.DataFrame, indexed by odor, with glomerulus (or receptor
         still?) as column name, of the simulated PN responses.
@@ -46,7 +48,7 @@ def pns(orn=None, model='input gain control', add_noise=False):
     # TODO convert values that should be convertable in orns.py, and raise error
     # there?
     if orn is None:
-        orn = orns.orns()
+        orn = orns.orns(**kwargs)
 
     # TODO so this isn't set separately for each channel?
     #Rmax = np.amax(orns, axis=1)
@@ -69,6 +71,7 @@ def pns(orn=None, model='input gain control', add_noise=False):
         # s = m * LFP (4)
         # LFP = sum{i=1, # receptor types}(ORNi) / 190
         # 190?
+        # TODO check index name on axis 1 matches our expectation / size
         s = m_input_gain * np.sum(orn, 1) / 190
 
         R_orn_pow = np.power(orn, exponent)
