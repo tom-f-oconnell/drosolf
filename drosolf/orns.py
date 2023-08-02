@@ -75,6 +75,9 @@ glomerulus2receptor = {
     'VM5v': '98a',
 }
 assert len(glomerulus2receptor) == n_hallem_receptors
+receptor2glomerulus = {r: g for g, r in glomerulus2receptor.items()}
+assert len(receptor2glomerulus) == len(glomerulus2receptor)
+
 
 def _read_hallem_csv(**kwargs):
     # after usecols (1 odor name index column + receptor columns) is a CAS column I
@@ -208,12 +211,8 @@ def _check_csv_data():
 
     # TODO validate all receptor names match <1-2 digits><lowercase letter a-f>?
 
-    # between these two, that should imply 1:1
     assert len(glomerulus2receptor) == n_hallem_receptors
     assert len(set(glomerulus2receptor.values())) == len(glomerulus2receptor)
-    # and if 1:1, we can safely do this (note the order is swapped)
-    receptor2glomerulus = {r: g for g, r in glomerulus2receptor.items()}
-    assert len(receptor2glomerulus) == len(glomerulus2receptor)
 
     csv_glomeruli = df.columns
     csv_receptors = df.iloc[0]
@@ -229,7 +228,6 @@ def _check_csv_data():
 
     csv_map = {k: v for k, v in zip(csv_glomeruli, csv_receptors) if k in common_glom}
     assert csv_map == {k: v for k, v in glomerulus2receptor.items() if k in common_glom}
-
 
     assert set(csv_receptors) == set(glomerulus2receptor.values())
 
