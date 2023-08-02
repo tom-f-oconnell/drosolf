@@ -1,0 +1,61 @@
+glomerulus,sensillum,receptors,orco,ir8a,ir76b,ir25a
+D,Ab9A,"Or69aA, Or69aB",Yes,Variable,No,No
+DA1,At1A,Or67d,Yes,No,Variable,Yes
+DA2,Ab4B,"Or56a, Or33a",Yes,No,No,Yes
+DA3,Ai2B (At2B),Or23a,Yes,No,No,Yes
+DA4l,Ai3C (At3C),Or43a,Yes,No,No,Yes
+DA4m,Ai3B (At3B),Or2a,Yes,No,No,Yes
+DC1,Ai3A (At3A),"Or19a, Or19b",Yes,No,No,Yes
+DC2,Ai1A (Ab6A),Or13a,Yes,No,No,Yes
+DC3,Ai2A (At2A),Or83c,Yes,No,Yes,Variable
+DL1,Ab1D,"Or10a, Gr10a",Yes,Yes,Yes,Yes
+DL3,At4B,"Or65a, Or65b, Or65c",Yes,No,No,Yes
+DL4,Ab10B,"Or49a, Or85f",Yes,No,No,Yes
+DL5,Ab4A,Or7a,Yes,No,No,Variable
+DM1,Ab1A,Or42b,Yes,No,No,Yes
+DM2,Ab3A,"Or22a, Or22b",Yes,No,No,Yes
+DM3,Ab5B,"Or47a, Or33b",Yes,No,No,No
+DM4,Ab2A,Or59b,Yes,No,No,Yes
+DM5,Ab2B,"Or85a, Or33b",Yes,No,No,No
+DM6,Ab10A,Or67a,Yes,No,No,Yes
+VA1d,At4C,Or88a,Yes,No,No,Yes
+VA1v,At4A,Or47b,Yes,No,No,Yes
+VA2,Ab1B,Or92a,Yes,No,No,Yes
+VA3,Ab9B,Or67b,Yes,Yes,Yes,Yes
+VA4,Pb3B,Or85d,Yes,No,No,Yes
+VA5,Ai1B (Ab6B),Or49b,Yes,Yes,Yes,Yes
+VA6,Ab5A,Or82a,Yes,Yes,Yes,Yes
+VA7l,Pb2B,Or46a,Yes,No,No,Yes
+VA7m,UNK,UNK,Yes,No,Variable,Yes
+VC1,Pb2A,"Or33c, Or85e",Yes,No,No,Yes
+VC2,Pb1B,Or71a,Yes,No,No,Yes
+VC4,Ab7B,Or67c,Yes,No,Yes,Yes
+VM2,Ab8A,Or43b,Yes,No,No,No
+VM3,Ab8B,Or9a,Yes,No,No,No
+VM5d,Ab3B,"Or85b?, Or98b?",Yes,Variable,No,Yes
+VM5v,Ab7A,Or98a,Yes,Yes,No,Yes
+VM7d,Pb1A,Or42a,Yes,No,No,Yes
+VM7v,Pb3A,Or59c,Yes,No,No,Yes
+VC3,Ac3B,Or35a,Yes,Yes,Yes,Yes
+V,Ab1C,"Gr21a, Gr63a",Yes,No,No,Yes
+DC4,"Sacculus, chamber III",Ir64a,Variable,Yes,No,Yes
+DL2d,Ac3A,Ir75b,Yes,Yes,No,Yes
+DL2v,Ac3A,Ir75c,Yes,Yes,No,Yes
+DP1l,Ac2,Ir75a,Yes,Yes,Yes,Yes
+DP1m,"Sacculus, chamber III",Ir64a,No,Yes,Yes,Yes
+VL2a,Ac4,Ir84a,Yes,Yes,Yes,Yes
+VL2p,Ac1,Ir31a,No,Yes,Yes,Yes
+VC5,Ac2,Ir41a,No,Yes,Yes,Yes
+VM1,Ac1,Ir92a,No,Yes,Yes,Yes
+VM4,Ac4,Ir76a,Yes,Yes,Yes,Yes
+VL1,"Ac1, Ac2, Ac4",Ir75d,Yes,Yes,Yes,Yes
+VM6v,Ac1,"Rh50, Amt",No,Yes (weak),No,Yes
+VM6m,"Sacculus, chamber III","Rh50, Amt",No,Yes (weak),No,Yes
+VM6l,"Sacculus, chamber III","Rh50, Amt",No,Yes (strong),No,Yes
+VP1d,"Sacculus, chamber II","Ir40a, Ir93a",No,No,No,Yes
+VP1l,"Sacculus, chamber I","Ir21a, Ir93a",No,No,No,Yes
+VP1m,"Sacculus, chamber I","Ir68a, Ir93a",No,No,No,Yes
+VP2,Arista,"Gr28b.d, Ir93a",No,No,No,Yes
+VP3,Arista,"Ir21a, Ir93a",No,No,No,Yes
+VP4,I + II,"Ir40a, Ir93a",No,No,No,Yes
+VP5,"Sacculus, chamber II","Ir68a, Ir93a",No,No,No,Yes

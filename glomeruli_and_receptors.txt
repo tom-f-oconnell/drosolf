@@ -1,3 +1,7 @@
+Contents of this file derived from:
+"Chemoreceptor co-expression in Drosophila melanogaster olfactory neurons"
+(Task et al 2022, from Chris Potter's lab)
+
 Glomeruli -> receptors:
 glomerulus
 D                  [Or69aA, Or69aB]
