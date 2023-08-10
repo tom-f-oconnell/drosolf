@@ -3,9 +3,10 @@
 For loading Hallem & Carlson olfactory receptor neuron responses.
 """
 
-from typing import List, Optional
+from typing import List, Dict, Optional
 
 from pathlib import Path
+from pprint import pprint
 
 import numpy as np
 import pandas as pd
@@ -28,11 +29,11 @@ import pandas as pd
 # TODO TODO TODO where was that other csv getting VM5d (and what does task 22 say?)
 
 # TODO move to __init__.py or something?
-data_dir = Path('../data').resolve()
+_script_dir = Path(__file__).resolve().parent
+data_dir = _script_dir.parent / 'data'
 
 hallem_csv_name = 'Hallem_Carlson_2006.csv'
 
-_script_dir = Path(__file__).resolve().parent
 hallem_csv_path = _script_dir / hallem_csv_name
 
 # TODO or do i also want to define location of this relative to orns.py, rather than
@@ -116,9 +117,10 @@ def orns(add_sfr: bool = True, drop_sfr: bool  = True, columns: str = 'receptor'
         # glomeruli names (1st row. 2 missing of 24).
         df = _read_hallem_csv(header=1)
 
-        _raw_hallem_df = df
+        _raw_hallem_df = df.copy()
     else:
-        df = _raw_hallem_df
+        # TODO .copy()? didn't seem to fix an issue
+        df = _raw_hallem_df.copy()
 
     sfr_row = 'spontaneous firing rate'
     assert sfr_row in df.index
@@ -132,7 +134,7 @@ def orns(add_sfr: bool = True, drop_sfr: bool  = True, columns: str = 'receptor'
         df[df < 0] = 0
 
     if drop_sfr:
-        df.drop(sfr_row, inplace=True)
+        df = df.drop(sfr_row)
 
     if columns == 'glomerulus':
         df.columns = df.columns.map(receptor2glomerulus)
@@ -142,17 +144,43 @@ def orns(add_sfr: bool = True, drop_sfr: bool  = True, columns: str = 'receptor'
     return df
 
 
+def _task_add_receptor_lists(df: pd.DataFrame) -> None:
+    """Modify `df` to add 'receptor_list' column, from splitting str 'receptors' column.
+    """
+    if 'receptor_lists' in df:
+        return
+
+    # TODO maybe sort receptors here?
+    # TODO need to strip any whitespace after (doesn't seem so)? always one space (seems
+    # so)? check set of receptor names this gives us for any whitespace
+    receptor_lists = df.receptors.str.split(', ')
+    assert (receptor_lists.str.len() >= 1).all()
+    df['receptor_lists'] = receptor_lists
+
+
+_task_df = None
 def _read_task_csv(**kwargs):
-    return pd.read_csv(task_csv, index_col='glomerulus', **kwargs)
+    global _task_df
+    if _task_df is None:
+        df = pd.read_csv(task_csv, index_col='glomerulus', **kwargs)
+        assert not df.index.duplicated().any(), 'should be one row per glomerulus'
+
+        _task_add_receptor_lists(df)
+
+        _task_df = df
+
+    return _task_df
 
 
 def format_glomeruli(glomeruli: List[str], *, delim: str = '+') -> str:
     return delim.join(sorted(glomeruli))
 
 
-_task_df = None
 _receptors_with_unclear_glomeruli = set()
 # TODO option to pass output thru format_glomeruli?
+# TODO rename?
+# TODO TODO warn if any glomeruli found also have other receptors? at least if verbose?
+# TODO set verbose default to False
 def find_glomeruli(receptor: str, _df: Optional[pd.DataFrame] = None, *,
     include_unclear_receptors: bool = True, verbose: bool = True
     ) -> Optional[List[str]]:
@@ -161,15 +189,13 @@ def find_glomeruli(receptor: str, _df: Optional[pd.DataFrame] = None, *,
         receptor: receptor name (from ORs, IRs, or a few other special values).
             'Or' prefix optional for ORs.
     """
-    global _task_df
-
     if _df is None:
-        if _task_df is None:
-            _task_df = _read_task_csv()
+        df = _read_task_csv()
+    else:
+        df = _df.copy()
+        _task_add_receptor_lists(df)
 
-        _df = _task_df
-
-    receptor_lists = _df.receptors.str.split(', ')
+    receptor_lists = df['receptor_lists']
 
     has_receptor = receptor_lists.apply(lambda rs: receptor in rs)
 
@@ -177,7 +203,7 @@ def find_glomeruli(receptor: str, _df: Optional[pd.DataFrame] = None, *,
     if unclear_receptor.sum() > 0:
         if verbose:
             print(f'found unclear receptors matching {receptor=}')
-            print(_df.loc[unclear_receptor, 'receptors'].to_string())
+            print(df.loc[unclear_receptor, 'receptors'].to_string())
             print()
 
         _receptors_with_unclear_glomeruli.add(receptor)
@@ -192,7 +218,7 @@ def find_glomeruli(receptor: str, _df: Optional[pd.DataFrame] = None, *,
     if has_receptor.sum() == 0:
         if not receptor.startswith('Or'):
             # TODO could first check receptor matches <1-2 digits>[a-f]
-            return find_glomeruli(f'Or{receptor}', _df=_df,
+            return find_glomeruli(f'Or{receptor}', _df=df,
                 include_unclear_receptors=include_unclear_receptors,
                 verbose=verbose
             )
@@ -202,8 +228,80 @@ def find_glomeruli(receptor: str, _df: Optional[pd.DataFrame] = None, *,
             #raise KeyError(f'no glomeruli found with input from {receptor=}')
             return None
 
-    glomeruli = _df.loc[has_receptor].index
-    return list(glomeruli)
+    glomeruli = df.loc[has_receptor].index
+    return sorted(glomeruli)
+
+
+# TODO TODO TODO in either pns.py or a new file, add fns for getting full hemibrain
+# (+ fafb) PN->KC data, ideally w/ glomeruli all in same terms as task 22 data here
+
+def task_glomerulus2receptors(verbose: bool = False) -> Dict[str, List[str]]:
+    df = _read_task_csv()
+
+    assert df.index.name == 'glomerulus'
+    receptor_lists = df.receptor_lists
+
+    # TODO sort in a way that splits into 'Or'(/prefix) <number> <letter> parts?
+    # not that important...
+    glomerulus2receptors = {g: sorted(rs) for g, rs in receptor_lists.to_dict().items()}
+    assert len(glomerulus2receptors) == len(df)
+
+    # TODO if verbose, print which glomerulus->receptors map for those w/ multiple
+    # receptors (as in task22.py)
+    if verbose:
+        multiple_receptors = {
+            g: rs for g, rs in glomerulus2receptors.items() if len(rs) > 1
+        }
+        if len(multiple_receptors) > 0:
+            print('glomeruli with multiple receptors:')
+            pprint(multiple_receptors)
+
+    # TODO process receptors w/ '?' suffix (to remove it)?
+
+    return glomerulus2receptors
+
+
+# TODO or should i format List[str] to just a str? flag to do so at least?
+# TODO also add option to convert any values that would have multiple to a single NaN?
+def task_receptor2glomeruli(verbose: bool = False, **kwargs) -> Dict[str, List[str]]:
+    """
+    Args:
+        **kwargs: passed thru to `find_glomeruli`
+    """
+    df = _read_task_csv()
+    receptor_lists = df.receptor_lists
+
+    receptors = set()
+    for rs in receptor_lists:
+        receptors.update(rs)
+
+    for receptor in receptors:
+        # TODO move these first two checks to _task_add_receptor_lists?
+        assert receptor == receptor.strip()
+        assert ',' not in receptor
+
+        # NOTE: this also implies that if any receptors have '?' as a suffix, that same
+        # receptor isn't listed anywhere without this uncertainty.
+        assert not any(x.startswith(receptor) for x in receptors - {receptor})
+
+    receptor2glomeruli = {
+        r: find_glomeruli(r, verbose=verbose, **kwargs) for r in sorted(receptors)
+    }
+
+    if verbose:
+        glomerulus2receptors = task_glomerulus2receptors(verbose=verbose)
+        multiple_glomeruli = {
+            r: [f'{g} ({"+".join(glomerulus2receptors[g])})' for g in gs]
+            for r, gs in receptor2glomeruli.items() if len(gs) > 1
+        }
+        if len(multiple_glomeruli) > 0:
+            print()
+            print('receptors with multiple glomeruli:')
+            pprint(multiple_glomeruli)
+
+    # TODO process receptors w/ '?' suffix (to remove it)?
+
+    return receptor2glomeruli
 
 
 def _check_csv_data():
@@ -231,8 +329,21 @@ def _check_csv_data():
 
     assert set(csv_receptors) == set(glomerulus2receptor.values())
 
+    # TODO replace all receptor2glomerulus/glomerulus2receptor stuff w/ task_*
+    # counterparts?
     receptor2task_glomeruli = {
         r: format_glomeruli(find_glomeruli(r)) for r in csv_receptors
     }
     assert receptor2glomerulus == receptor2task_glomeruli
+
+    receptor2glomeruli = task_receptor2glomeruli()
+    # TODO move this to an option in task_receptor2glomeruli?
+    receptor2glomeruli = {r.strip('?'): gs for r, gs in receptor2glomeruli.items()}
+
+    assert not any(x.startswith('Or') for x in csv_receptors)
+
+    hallem_receptor2glomeruli = {
+        r: '+'.join(receptor2glomeruli[f'Or{r}']) for r in csv_receptors
+    }
+    assert hallem_receptor2glomeruli == receptor2glomerulus
 

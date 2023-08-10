@@ -173,7 +173,9 @@ def main():
     print(
         tdf.loc[multiple_receptors, ['glomerulus', 'receptors']].to_string(index=False)
     )
-    #import ipdb; ipdb.set_trace()
+
+    # TODO share code from orns.task_receptor2glomeruli to print out receptors w/
+    # multiple glomeruli?
 
 
 if __name__ == '__main__':
