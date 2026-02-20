@@ -26,3 +26,6 @@ def test_pns():
     pn_responses = pns.pns()
     check_dataframe(pn_responses)
 
+
+def test_receptor2glomeruli_match_task22():
+    orns._check_csv_data()

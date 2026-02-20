@@ -1,9 +1,10 @@
-
 """
 For loading Hallem & Carlson olfactory receptor neuron responses.
 """
 
 from typing import List, Dict, Optional
+# i thought it was importlib.resources after 3.7?
+from importlib_resources import files
 
 from pathlib import Path
 from pprint import pprint
@@ -28,17 +29,16 @@ import pandas as pd
 # - doesn't have the lower concentration / fruit data from the other table
 # TODO TODO TODO where was that other csv getting VM5d (and what does task 22 say?)
 
-# TODO move to __init__.py or something?
-_script_dir = Path(__file__).resolve().parent
-data_dir = _script_dir.parent / 'data'
+data_dir = files('drosolf.data')
 
-hallem_csv_name = 'Hallem_Carlson_2006.csv'
-
-hallem_csv_path = _script_dir / hallem_csv_name
+task_csv = data_dir.joinpath('task22_table3.csv')
+hallem_csv = data_dir.joinpath('Hallem_Carlson_2006.csv')
 
 # TODO or do i also want to define location of this relative to orns.py, rather than
 # data_dir? if so, could move data_dir back into task22.py
-task_csv = data_dir / 'task22_table3.csv'
+# path to this seems broken when at least one pip install 2025-04-11, w/ pip==22.3.1
+# (same as in al_analysis venv) (run from w/in ~/src/model_test/al_analysis)
+# [via `git+https://github.com/tom-f-oconnell/drosolf` line in requirements.txt]
 
 n_hallem_receptors = 24
 glomerulus2receptor = {
@@ -83,7 +83,7 @@ assert len(receptor2glomerulus) == len(glomerulus2receptor)
 def _read_hallem_csv(**kwargs):
     # after usecols (1 odor name index column + receptor columns) is a CAS column I
     # don't want
-    df = pd.read_csv(hallem_csv_path, index_col='odor',
+    df = pd.read_csv(hallem_csv, index_col='odor',
         usecols=range(1 + n_hallem_receptors), **kwargs
     )
     df.columns.name = 'receptor'

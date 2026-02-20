@@ -11,6 +11,8 @@ from pathlib import Path
 import pandas as pd
 import tabula
 
+# NOTE: data_dir is now something from importlib.resources, and not a simple path, so
+# this script might be broken
 from drosolf.orns import orns, find_glomeruli, data_dir, task_csv
 
 
