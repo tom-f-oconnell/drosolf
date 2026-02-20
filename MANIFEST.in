@@ -1,2 +1,4 @@
-include LICENSE.txt drosolf/Hallem_Carlson_2006.csv
+include drosolf/data/*.csv
+include drosolf/data/*.xls
+include drosolf/data/*.xlsx
 

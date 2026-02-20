@@ -12,6 +12,8 @@ from pprint import pprint
 import numpy as np
 import pandas as pd
 
+import drosolf
+
 
 # TODO delete this note + hc_data.csv (though if it's the only soure of data w/ lower
 # conc stuff, maybe just replace Hallem_Carlson_2006.csv with it?
@@ -232,7 +234,7 @@ def find_glomeruli(receptor: str, _df: Optional[pd.DataFrame] = None, *,
     return sorted(glomeruli)
 
 
-# TODO TODO TODO in either pns.py or a new file, add fns for getting full hemibrain
+# TODO TODO in either pns.py or a new file, add fns for getting full hemibrain
 # (+ fafb) PN->KC data, ideally w/ glomeruli all in same terms as task 22 data here
 
 def task_glomerulus2receptors(verbose: bool = False) -> Dict[str, List[str]]:
