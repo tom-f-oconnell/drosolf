@@ -4,8 +4,10 @@
 To understand the distances between ORN representations of Hallem odors better.
 """
 
+# TODO add to optional deps?
 from scipy.spatial.distance import pdist
 import matplotlib.pyplot as plt
+#
 
 import drosolf.orns as orns
 

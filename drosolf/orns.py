@@ -2,13 +2,12 @@
 For loading Hallem & Carlson olfactory receptor neuron responses.
 """
 
-from typing import List, Dict, Optional
-# i thought it was importlib.resources after 3.7?
-from importlib_resources import files
-
 from pathlib import Path
 from pprint import pprint
+from typing import List, Dict, Optional
 
+# stdlib importlib.resources.files is only available >=3.9, so using this backport
+from importlib_resources import files
 import numpy as np
 import pandas as pd
 

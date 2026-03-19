@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# TODO add CLI entrypoint for this (and have install add tabula to deps when installing
+# that?)
 """
 Parses PDF of Task et al. 2022 ("Chemoreceptor co-expression in Drosophila melanogaster
 olfactory neurons") and writes main content of table 3 to `task22_table3.csv`.
@@ -9,16 +11,18 @@ Also summarizes glomerulus:receptor mapping.
 from pathlib import Path
 
 import pandas as pd
+# TODO add to optional dependencies in pyproject.toml
 import tabula
 
-# NOTE: data_dir is now something from importlib.resources, and not a simple path, so
-# this script might be broken
 from drosolf.orns import orns, find_glomeruli, data_dir, task_csv
 
 
+# TODO make sure this is also included in MANIFEST / data files, so it is hopefully
+# also installed in away that's available to importlib_resources?
 pdf = data_dir / 'pdfs/task_2022.pdf'
 
 def clean_df(df):
+    # TODO doc
     assert len(df.columns) == 9
 
     # last column = reference column
@@ -78,6 +82,11 @@ def clean_df(df):
 
 
 def main():
+    if task_csv.exists():
+        raise IOError(f'{task_csv=} already existed! delete/rename. will not overwrite')
+
+    # NOTE: this can err about not being able to connect to X11 if called from within
+    # tmux
     # These are the pages that should contain table 3.
     dfs = tabula.read_pdf(pdf, pages=[11, 12, 13])
 
